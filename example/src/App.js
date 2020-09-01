@@ -1,10 +1,13 @@
 import React from 'react'
-
-import { ExampleComponent } from 'react-material-fields'
-import 'react-material-fields/dist/index.css'
+import { TextField, PhoneField, PasswordField } from 'react-material-fields'
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+  return <React.Fragment>
+     <TextField type = { "text" }/>
+     <PhoneField mask = { [/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] } 
+                 type = { "phone" }/>
+     <PasswordField />            
+  </React.Fragment>
 }
 
 export default App

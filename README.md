@@ -27,4 +27,4 @@ class Example extends Component {
 
 ## License
 
-MIT © [Sequenia](https://github.com/Sequenia)
+MIT © [sequenia](https://github.com/sequenia)
