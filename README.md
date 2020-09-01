@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-npm install --save react-material-fields
+npm install --save @sequenia/react-material-fields
 ```
 
 ## Usage
@@ -15,12 +15,11 @@ npm install --save react-material-fields
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'react-material-fields'
-import 'react-material-fields/dist/index.css'
+import { TextField } from '@sequenia/react-material-fields'
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return <TextField type = { "text" }/>
   }
 }
 ```

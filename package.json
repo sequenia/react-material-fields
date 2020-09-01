@@ -1,10 +1,13 @@
 {
   "name": "@sequenia/react-material-fields",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "React fields with Material-UI design",
   "author": "sequenia",
   "license": "MIT",
-  "repository": "sequenia/react-material-fields",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sequenia/react-material-fields.git"
+  },
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",
@@ -57,5 +60,16 @@
   },
   "files": [
     "dist"
+  ],
+  "bugs": {
+    "url": "https://github.com/sequenia/react-material-fields/issues"
+  },
+  "homepage": "https://github.com/sequenia/react-material-fields#readme",
+  "directories": {
+    "example": "example"
+  },
+  "keywords": [
+    "React",
+    "Material-UI"
   ]
 }
