@@ -2,17 +2,17 @@
 // https://material-ui.com/ru/api/menu-item/
 
 import React from 'react'
-import clsx from 'clsx'
 import PropTypes from 'prop-types'
-import uuidv4 from 'uuid/v4'
 
-import {
-  Select,
-  FormLabel,
-  InputLabel,
-  FormControl,
-  MenuItem
-} from '@material-ui/core'
+import { compose } from 'recompose'
+import { withStyles } from '@material-ui/styles'
+import withHelperText from './hocs/with_helper_text.js'
+import withGuid from './hocs/with_guid.js'
+
+import { MenuItem } from '@material-ui/core'
+
+import BaseSelectField, { selectStyles } from './base_select_field.js'
+import IcCheckMark from './resources/icons/ic_check_mark.js'
 
 import {
   InputVariantStandard,
@@ -23,150 +23,176 @@ import {
   ClearItemValue
 } from './constants.js'
 
-const selectStyles = (theme) => ({
-  root: {
-    '& .MuiSelect-selectMenu': {
-      display: 'flex',
-      '& $checkMark': {
-        display: 'none'
-      }
-    }
-  },
-  menuItem: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  text: {
-    display: 'block'
-  },
-  checkMark: {
-    marginLeft: '24px'
-  },
-  displayValue: {
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis'
-  }
-})
+const styles = (theme) => ({})
 
-class SelectField extends React.Component {
+class SelectField extends BaseSelectField {
   constructor(props) {
     super(props)
-    this.labelId = uuidv4()
 
-    this.state = {}
-    this.onChange = this.onChange.bind(this)
-
-    this.value = this.value.bind(this)
-    this.renderValue = this.renderValue.bind(this)
+    this.processValue = this.processValue.bind(this)
+    this.isSelected = this.isSelected.bind(this)
   }
 
-  onChange(event) {}
+  static getDerivedStateFromProps(props, state) {
+    let value
+
+    const { multiple, availableValues } = props
+
+    const emptyValue = multiple ? [] : ''
+
+    const propsValue = props.value || emptyValue
+    let defaultValue = state.defaultValue || emptyValue
+    const stateValue = state.value || emptyValue
+
+    if (JSON.stringify(defaultValue) !== JSON.stringify(propsValue)) {
+      defaultValue = propsValue
+      value = propsValue
+    } else {
+      value = stateValue
+    }
+
+    return {
+      ...state,
+      availableValues: availableValues,
+      value: value,
+      defaultValue: defaultValue
+    }
+  }
 
   shouldComponentUpdate(nextProps, nextState) {
     return (
-      this.props.displayName !== nextProps.displayName ||
-      this.props.hasError !== nextProps.hasError ||
-      this.state.isOpen !== nextState.isOpen ||
-      this.props.readOnly !== nextProps.readOnly
+      super.shouldComponentUpdate(nextState, nextState) ||
+      JSON.stringify(this.state.value) !== JSON.stringify(nextState.value) ||
+      JSON.stringify(this.state.availableValues) !==
+        JSON.stringify(nextState.availableValues)
     )
   }
 
   value() {
-    return ''
+    const { value } = this.state
+    return value
+  }
+
+  onChange(event) {
+    const { onChange } = this.props
+    const value = this.processValue(event.target.value)
+
+    this.setState({
+      value: value
+    })
+
+    if (onChange) {
+      onChange(value)
+    }
+  }
+
+  processValue(newValue) {
+    const { multiple } = this.props
+    if (!multiple) {
+      return newValue === ClearItemValue ? '' : newValue
+    }
+    if (newValue.includes(ClearItemValue)) {
+      return []
+    }
+    return newValue
   }
 
   renderValue() {
-    return <React.Fragment />
+    const { multiple, clearItem } = this.props
+    const { value } = this.state
+
+    if (!multiple && (!value || value === '')) {
+      return clearItem
+    }
+    if (multiple && value.length === 0) {
+      return clearItem
+    }
+    if (!multiple) {
+      return this.label(value)
+    }
+
+    return value
+      .map((val) => {
+        return this.label(val)
+      })
+      .join(', ')
+  }
+
+  isSelected(val) {
+    const { multiple } = this.props
+    const { value } = this.state
+    if (!multiple) {
+      return val === value
+    }
+    return value.includes(val)
   }
 
   pickerContent() {
-    return <React.Fragment />
+    const { classes, allowClear } = this.props
+
+    const { availableValues } = this.state
+
+    let optionValues = this.rawValues()
+    if (availableValues) {
+      optionValues = optionValues.filter(
+        (val) => availableValues.includes(val) || this.isSelected(val)
+      )
+    }
+
+    const options = optionValues.map((rawValue) => {
+      return (
+        <MenuItem key={rawValue} value={rawValue} className={classes.menuItem}>
+          <span className={classes.text}>{this.label(rawValue)}</span>
+          {this.isSelected(rawValue) && (
+            <IcCheckMark className={classes.checkMark} />
+          )}
+        </MenuItem>
+      )
+    })
+    if (allowClear && optionValues.length > 0) {
+      options.unshift(this.clearItem())
+    }
+    return options
   }
 
-  clearItem() {
-    const { classes, clearItem } = this.props
-    return (
-      <MenuItem
-        key={ClearItemValue}
-        value={ClearItemValue}
-        className={classes.menuItem}
-      >
-        <span className={classes.text}>{clearItem}</span>
-      </MenuItem>
-    )
+  rawValues() {
+    const { data } = this.props
+    const values = data.map((item) => {
+      return item.value
+    })
+    return values
+  }
+
+  values() {
+    const { data } = this.props
+    const result = {}
+    this.rawValues().forEach((rawValue, index) => {
+      result[rawValue] = {
+        key: data[index].key,
+        value: rawValue
+      }
+    })
+    return result
+  }
+
+  label(value) {
+    if (!value) {
+      return '-'
+    }
+    const enumValue = this.values()[value]
+    if (!enumValue) {
+      return '-'
+    }
+    return enumValue.key
   }
 
   render() {
-    const {
-      classes,
-      className,
-      guid,
-      hasError,
-      multiple,
-      allowClear,
-      readOnly
-    } = this.props
+    const { data } = this.props
 
-    const { name, displayName, variant, displayNamePosition } = this.props
-
-    return (
-      <React.Fragment>
-        {displayNamePosition === InputLabelDisplayModeAbove && (
-          <FormLabel htmlFor={guid} error={hasError}>
-            {`${displayName}:`}
-          </FormLabel>
-        )}
-        <FormControl variant={variant} fullWidth disabled={readOnly}>
-          {displayNamePosition === InputLabelDisplayModeInside && (
-            <React.Fragment>
-              {allowClear && (
-                <InputLabel id={this.labelId} error={hasError} shrink>
-                  {`${displayName}`}
-                </InputLabel>
-              )}
-              {!allowClear && (
-                <InputLabel id={this.labelId} error={hasError}>
-                  {`${displayName}`}
-                </InputLabel>
-              )}
-            </React.Fragment>
-          )}
-          <Select
-            className={clsx(classes.root, className)}
-            fullWidth
-            id={guid}
-            labelId={this.labelId}
-            name={name}
-            variant={variant}
-            value={this.value()}
-            renderValue={() => {
-              const renderedValue = this.renderValue()
-              return (
-                <div className={classes.displayValue} title={renderedValue}>
-                  {renderedValue}
-                </div>
-              )
-            }}
-            error={hasError}
-            multiple={multiple}
-            displayEmpty={allowClear}
-            MenuProps={{
-              onEnter: () => {
-                this.setState({ isOpen: true })
-              },
-              onExit: () => {
-                this.setState({ isOpen: false })
-              }
-            }}
-            onOpen={this.onOpen}
-            onChange={this.onChange}
-          >
-            {this.pickerContent()}
-          </Select>
-        </FormControl>
-      </React.Fragment>
-    )
+    if (!data) {
+      return <React.Fragment />
+    }
+    return super.render()
   }
 }
 
@@ -180,7 +206,6 @@ SelectField.propTypes = {
     InputLabelDisplayModeAbove,
     InputLabelDisplayModeInside
   ]),
-  clearItem: PropTypes.string,
   allowClear: PropTypes.bool,
   multiple: PropTypes.bool
 }
@@ -194,5 +219,14 @@ SelectField.defaultProps = {
   multiple: false
 }
 
-export default SelectField
-export { selectStyles }
+export default compose(
+  withGuid,
+  withHelperText,
+  withStyles(
+    (theme) => ({
+      ...selectStyles(theme),
+      ...styles(theme)
+    }),
+    { withTheme: true }
+  )
+)(SelectField)
