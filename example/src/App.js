@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextField, PhoneField, PasswordField } from 'react-material-fields'
+import { Checkbox, TextField, PhoneField, PasswordField } from 'react-material-fields'
 
 const App = () => {
   return <React.Fragment>
@@ -7,6 +7,7 @@ const App = () => {
      <PhoneField mask = { [/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] } 
                  type = { "phone" }/>
      <PasswordField />            
+     <Checkbox />            
   </React.Fragment>
 }
 
