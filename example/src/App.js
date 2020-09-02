@@ -1,5 +1,5 @@
 import React from 'react'
-import { Checkbox, DecimalField, SelectField, TextField, PhoneField, PasswordField } from 'react-material-fields'
+import { DateTimeField, DecimalField, SelectField, TextField, PhoneField, PasswordField } from 'react-material-fields'
 
 const App = () => {
   const data = [
@@ -39,6 +39,7 @@ const App = () => {
      <PasswordField />
      <DecimalField precision = { 1 }/>
      <SelectField data = { data } multiple = { true } allowClear = { true }/>
+     <DateTimeField />
   </React.Fragment>
 }
 

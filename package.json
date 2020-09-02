@@ -50,9 +50,12 @@
     "react-scripts": "^3.4.1"
   },
   "dependencies": {
+    "@date-io/moment": "1.x",
     "@material-ui/core": "^4.9.0",
+    "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.9.0",
     "clsx": "^1.0.2",
+    "moment": "^2.27.0",
     "prop-types": "^15.7.2",
     "react-number-format": "^4.4.1",
     "react-text-mask": "^5.4.3",
