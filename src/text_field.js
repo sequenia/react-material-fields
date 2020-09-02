@@ -191,3 +191,4 @@ TextField.defaultProps = {
 }
 
 export default compose(withGuid, withHelperText, withStyles(styles))(TextField)
+export { TextField as RawTextField }
