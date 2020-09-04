@@ -70,9 +70,9 @@ const App = () => {
                           Object.keys(params).forEach(key => url.searchParams.append(key, encodeURIComponent(params[key])));
 
                           return fetch(url).then((response) => response.json())
-                                          .then((response) => {
-                                            const { data } = response;
-                                            return data;
+                                           .then((response) => {
+                                             const { data } = response;
+                                             return data;
                           });
      } }/>
      <DateTimeField  />
