@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.css'
 import { Grid } from '@material-ui/core';
-import { DateTimeField, DecimalField, FileField, ImageField, SelectField, TextField, PhoneField, PasswordField } from 'react-material-fields'
+import { Checkbox, DateTimeField, DecimalField, FileField, ImageField, SelectField, TextField, PhoneField, PasswordField } from 'react-material-fields'
 
 const App = () => {
   const data = [
@@ -211,6 +211,25 @@ const App = () => {
         <Grid item md = {4}>
           <DateTimeField />
         </Grid>      
+      </Grid>        
+    </section>    
+    <section className = "section">
+      <h3>Checkbox component</h3>
+      <p>
+        Just checkbox :)
+      </p>
+      <Grid container 
+            spacing = {3}
+            alignItems = { "flex-end" }>
+        <Grid item md = {4}>
+          <Checkbox displayName = "Placement end and checked"
+                    checked = { true }
+                    placement = { "end" }/>
+        </Grid>    
+        <Grid item md = {4}>
+          <Checkbox displayName = "Placement start"
+                    placement = { "start" }/>
+        </Grid>   
       </Grid>        
     </section>    
 
