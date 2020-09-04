@@ -45,19 +45,29 @@ class RemoteSelectField extends BaseSelectField {
   }
 
   componentDidMount() {
-    const { multiple } = this.props;
+    const { multiple, primaryKey } = this.props;
     let { valueId } = this.props;
-    const { value } = this.state;
+    const { value, options } = this.state;
 
-    if(!valueId && multiple) {
-      valueId = [];
-    }
-    if(!multiple && !Array.isArray(valueId) && valueId) {
-      valueId = [valueId];
-    }
-    this.selectedValueIds = valueId;
+    this.selectedValueIds = [];
 
-    if(valueId && (!value || value.length === 0)) {
+    if(valueId) {
+      if(multiple && valueId.length > 0) {
+        this.selectedValueIds = [...valueId];
+      }
+      if(!multiple) {
+        this.selectedValueIds = [valueId];
+      }
+    }
+    else if(value){
+      if(multiple && value.length > 0) {
+        this.selectedValueIds = value.map(val => `${val[primaryKey]}`);
+      }
+      if(!multiple) {
+        this.selectedValueIds = `${value[primaryKey]}`;
+      }
+    }
+    if(options.length === 0 && this.selectedValueIds.length > 0) {
       this.loadData();
     }
   }
@@ -303,7 +313,7 @@ class RemoteSelectField extends BaseSelectField {
     }
     items.unshift(<div className = { classes.textFieldContainer }
                        key = { this.searchKey } >
-                    <TextField variant = { "outlined" }
+                    <TextField variant = { InputVariantOutlined }
                                fullWidth
                                value = { query }
                                onChange = { this.onQueryChange }
@@ -321,10 +331,7 @@ RemoteSelectField.propTypes = {
   displayNamePosition: PropTypes.oneOf([InputLabelDisplayModeAbove, InputLabelDisplayModeInside]),
   allowClear: PropTypes.bool,
   multiple: PropTypes.bool,
-  // downloader: PropTypes.shape({
-  //   then: PropTypes.func.isRequired,
-  //   catch: PropTypes.func.isRequired
-  // }),
+  underline: PropTypes.bool,
   downloader: PropTypes.func,
   sendQueryTimeout: PropTypes.number,
   primaryKey: PropTypes.string,
