@@ -296,7 +296,7 @@ class RemoteSelectField extends BaseSelectField {
       let val = option[primaryKey];
       let key = option[optionKey];
       return <MenuItem key = { key }
-                       value = { val }
+                       value = { `${val}` }
                        aria-disabled = { true }
                        className = { classes.menuItem } >
         <span className = { classes.text } >
