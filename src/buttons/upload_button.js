@@ -1,7 +1,7 @@
 import React from 'react'
 import clsx from 'clsx'
 import PropTypes from 'prop-types'
-import withGuid from './hocs/with_guid.js'
+import withGuid from '../hocs/with_guid.js'
 import { withStyles } from '@material-ui/styles'
 import { ButtonVariantOutlined } from './constants.js'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'

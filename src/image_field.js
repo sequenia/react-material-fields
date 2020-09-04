@@ -48,8 +48,8 @@ const styles = (theme) => ({
     opacity: 0.2
   },
   delete: {
-    color: theme.palette.redError,
-    borderColor: theme.palette.redErrorTransparent
+    color: '#f00',
+    borderColor: 'rgba(255, 0, 0, 0.1)'
   }
 })
 /*

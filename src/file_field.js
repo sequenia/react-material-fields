@@ -23,11 +23,11 @@ const styles = (theme) => ({
     height: '50px !important'
   },
   title: {
-    color: theme.palette.black,
+    color: '#000',
     fontSize: '14px',
     marginBottom: '6px',
     textTransform: 'uppercase',
-    fontWeight: theme.typography.fontWeightRegular
+    fontWeight: '400'
   },
   subtitle: {
     fontSize: '1rem',
@@ -44,8 +44,8 @@ const styles = (theme) => ({
     opacity: 0.2
   },
   delete: {
-    color: theme.palette.redError,
-    borderColor: theme.palette.redErrorTransparent
+    color: '#f00',
+    borderColor: 'rgba(255, 0, 0, 0.1)'
   },
   link: {
     fontSize: '14px',
@@ -122,7 +122,8 @@ class FileField extends React.Component {
       value = stateValue
     }
 
-    let hasErrors = Boolean(hasErrors)
+    // eslint-disable-next-line no-use-before-define
+    const hasErrors = Boolean(hasErrors)
     let errorMessages = []
 
     if (state.error && state.error.errorData && state.error.errorData.fields) {
@@ -165,6 +166,7 @@ class FileField extends React.Component {
       allowSelfLoad,
       deleteText
     } = this.props
+    // eslint-disable-next-line no-unused-vars
     const { local, value, uploading, error, hasErrors } = this.state
     const buttons = []
 
@@ -242,6 +244,7 @@ FileField.propTypes = {
 
 FileField.defaultProps = {
   allowDelete: true,
+  allowSelfLoad: true,
   accept: '*/*',
   deleteText: 'Delete'
 }
