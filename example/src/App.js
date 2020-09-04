@@ -1,10 +1,16 @@
 import React from 'react'
 import './index.css'
 import { Grid } from '@material-ui/core';
-import { Checkbox, DateTimeField, DecimalField, FileField, ImageField, SelectField, TextField, PhoneField, PasswordField } from 'react-material-fields'
+import {
+  Checkbox,
+  DateTimeField,
+  ImageField, FileField,
+  SelectField, RemoteSelectField,
+  TextField, DecimalField, PhoneField, PasswordField 
+} from 'react-material-fields'
 
 const App = () => {
-  const data = [
+  const selectData = [
     {
       key: "One",
       value: "1"
@@ -33,7 +39,30 @@ const App = () => {
       key: "Seven",
       value: "7"
     }
-  ]
+  ];
+  const singleSelectValue = {
+    "id":2,
+    "email":"janet.weaver@reqres.in",
+    "first_name":"Janet",
+    "last_name":"Weaver",
+    "avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/josephstein/128.jpg"
+  };
+  const multipleSelectValue = [
+    {
+      "id":2,
+      "email":"janet.weaver@reqres.in",
+      "first_name":"Janet",
+      "last_name":"Weaver",
+      "avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/josephstein/128.jpg"
+    },
+    {
+      "id":3,
+      "email":"emma.wong@reqres.in",
+      "first_name":"Emma",
+      "last_name":"Wong",
+      "avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/olegpogodaev/128.jpg"
+    }
+  ];
 
   return <div className = "container">
     <h1>React Material Fields</h1>
@@ -231,12 +260,116 @@ const App = () => {
                     placement = { "start" }/>
         </Grid>   
       </Grid>        
+    </section>   
+    <section className = "section">
+      <h3>SelectField component</h3>
+      <p>
+        Custom select.
+      </p>
+      <Grid container 
+            spacing = {3}
+            alignItems = { "flex-end" }>
+        <Grid item md = {4}>
+          <SelectField data = { selectData }
+                       displayName = { "Multiple choosing" } 
+                       multiple = { true } 
+                       allowClear = { false }/>
+        </Grid>    
+        <Grid item md = {4}>
+        <SelectField data = { selectData }
+                     displayName = { "All option" } 
+                     allowClear = { true } />
+        </Grid>   
+      </Grid>        
     </section>    
+    <section className = "section">
+      <h3>RemoteSelectField component</h3>
+      <p>
+        Custom select with remote data and searching field.
+      </p>
+      <Grid container 
+            spacing = {3}
+            alignItems = { "flex-end" }>
+        <Grid item md = {4}>
+          <RemoteSelectField multiple = { true }
+                             displayName = { "Multiple select" } 
+                             optionDisplayName = { (option) => {
+                              const { first_name, last_name } = option;
+                              return `${first_name} ${last_name}`;
+                             }}
+                             value = { multipleSelectValue }
+                             onChange = { (value) => {
+                              console.log(value)
+                             }}
+                             downloader = { (searchQuery, selectedValueIds) => {
+                             const params = {
+                              query: searchQuery,
+                              valueIds: selectedValueIds
+                             }
+                             const url = new URL("https://reqres.in/api/users");
+                             Object.keys(params).forEach(key => url.searchParams.append(key, encodeURIComponent(params[key])));
 
+                             return fetch(url).then((response) => response.json())
+                                              .then((response) => {
+                                                const { data } = response;
+                                                return data;
+                             });
+          } }/>
+        </Grid>    
+        <Grid item md = {4}>
+          <RemoteSelectField allowClear = { true }
+                             displayName = { "Single select" } 
+                             optionDisplayName = { (option) => {
+                              const { first_name, last_name } = option;
+                              return `${first_name} ${last_name}`;
+                             }}
+                             value = { singleSelectValue }
+                             onChange = { (value) => {
+                              console.log(value)
+                             }}
+                             downloader = { (searchQuery, selectedValueIds) => {
+                             const params = {
+                              query: searchQuery,
+                              valueIds: selectedValueIds
+                             }
+                             const url = new URL("https://reqres.in/api/users");
+                             Object.keys(params).forEach(key => url.searchParams.append(key, encodeURIComponent(params[key])));
 
-     <SelectField data = { data } multiple = { true } allowClear = { true }/>
-     <DateTimeField />
-     <FileField uploader = {() => Promise.resolve() } allowSelfLoad = { true } />
+                             return fetch(url).then((response) => response.json())
+                                              .then((response) => {
+                                                const { data } = response;
+                                                return data;
+                             });
+          } }/>
+        </Grid>      
+      </Grid>        
+    </section>
+    <section className = "section">
+      <h3>ImageField component</h3>
+      <p>
+        Image File uploader.
+      </p>
+      <Grid container 
+            spacing = {3}
+            alignItems = { "flex-end" }>
+        <Grid item md = {4}>
+          <ImageField uploader = {() => Promise.resolve() } />
+        </Grid>
+      </Grid>  
+    </section>      
+    <section className = "section">
+      <h3>FileField component</h3>
+      <p>
+        File uploader.
+      </p>
+      <Grid container 
+            spacing = {3}
+            alignItems = { "flex-end" }>
+        <Grid item md = {4}>
+          <FileField uploader = {() => Promise.resolve() } />
+        </Grid>
+      </Grid>  
+    </section>      
   </div>
 }
 

@@ -30,6 +30,9 @@ const selectStyles = (theme) => ({
       '& $checkMark': {
         display: 'none'
       }
+    },
+    '& .PrivateNotchedOutline-legendNotched-4': {
+      maxWidth: '1000px'
     }
   },
   menuItem: {
@@ -137,6 +140,11 @@ class BaseSelectField extends React.Component {
             fullWidth
             id={guid}
             labelId={this.labelId}
+            label={
+              displayNamePosition === InputLabelDisplayModeInside
+                ? displayName
+                : undefined
+            }
             name={name}
             variant={variant}
             value={this.value()}
