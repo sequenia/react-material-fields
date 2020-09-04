@@ -21,7 +21,8 @@ import {
   TextFieldTypeNumber,
   TextFieldTypeEmail,
   TextFieldCapitalizationNone,
-  TextFieldCapitalizationUppercase
+  TextFieldCapitalizationUppercase,
+  TextFieldCapitalizationCapitalize
 } from './constants.js'
 
 const styles = (theme) => ({})
@@ -72,6 +73,9 @@ class TextField extends React.Component {
     let value = (event.target.value || '').trimLeft()
     if (capitalization === TextFieldCapitalizationUppercase) {
       value = value.toUpperCase()
+    }
+    if (capitalization === TextFieldCapitalizationCapitalize) {
+      value = value.charAt(0).toUpperCase() + value.slice(1)
     }
 
     this.setState({

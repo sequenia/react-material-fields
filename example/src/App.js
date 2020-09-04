@@ -1,4 +1,6 @@
 import React from 'react'
+import './index.css'
+import { Grid } from '@material-ui/core';
 import { DateTimeField, DecimalField, FileField, ImageField, SelectField, TextField, PhoneField, PasswordField } from 'react-material-fields'
 
 const App = () => {
@@ -33,16 +35,190 @@ const App = () => {
     }
   ]
 
-  return <React.Fragment>
-     <TextField type = { "text" }/>
-     <PhoneField mask = { [/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] } 
-                 type = { "phone" }/>
-     <PasswordField />
-     <DecimalField precision = { 3 } />
+  return <div className = "container">
+    <h1>React Material Fields</h1>
+    <p>React custom component with Material-UI design.</p>
+    <section className = "section">
+      <h3>TextField component</h3>
+      <p>It's a simple text, email, or number input field.</p>
+      <p>Variants of styling (also fo Phone, Password, Decimal, Select and DateTime fields): </p>  
+      <Grid container 
+            spacing = {3}
+            alignItems = { "flex-end" }>
+        <Grid item md = {4}>
+          <TextField type = { "text" }
+                    displayName = { "standard" } 
+                    variant = { "standard" }/>
+        </Grid>
+        <Grid item md = {4}>
+          <TextField type = { "text" }
+                    displayName = { "filled" } 
+                    variant = { "filled" }/>
+        </Grid>
+        <Grid item md = {4}>
+          <TextField type = { "text" }
+                    displayName = { "outlined" } 
+                    variant = { "outlined" }/>
+        </Grid>
+      </Grid>
+      <p>Name displaying (also fo Phone, Password, Decimal, Select and DateTime fields): </p>
+      <Grid container 
+            spacing = {3}
+            alignItems = { "flex-end" }>
+        <Grid item md = {4}>
+          <TextField type = { "text" }
+                    displayName = { "above" }
+                    displayNamePosition = { "above" } />
+        </Grid>
+        <Grid item md = {4}>
+          <TextField type = { "text" }
+                    displayName = { "inside" }
+                    displayNamePosition = { "inside" } />
+        </Grid>
+      </Grid>  
+      <p>Read only disabling (also fo Phone, Password, Decimal, Select and DateTime fields): </p>
+      <Grid container 
+            spacing = {3}
+            alignItems = { "flex-end" }>
+        <Grid item md = {4}>
+          <TextField type = { "text" }
+                    displayName = { "Read only" }
+                    readOnly = { true } />
+        </Grid>
+      </Grid>  
+      <p>Error (also fo Phone, Password, Decimal, Select and DateTime fields): </p>
+      <Grid container 
+            spacing = {3}
+            alignItems = { "flex-end" }>
+        <Grid item md = {4}>
+          <TextField type = { "text" }
+                    displayName = { "Error" }
+                    hasError = { true } />
+        </Grid>
+      </Grid>  
+      <p>Capitalization: </p>
+      <Grid container 
+            spacing = {3}
+            alignItems = { "flex-end" }>
+        <Grid item md = {4}>
+          <TextField type = { "text" }
+                    displayName = { "capitalize" }
+                    capitalization = { "capitalize" } />
+        </Grid>
+        <Grid item md = {4}>
+          <TextField type = { "text" }
+                    displayName = { "lowercase" }
+                    capitalization = { "lowercase" } />
+        </Grid>
+        <Grid item md = {4}>
+          <TextField type = { "text" }
+                    displayName = { "uppercase" }
+                    capitalization = { "uppercase" } />
+        </Grid>
+      </Grid>    
+      <p>Types: </p>
+      <Grid container 
+            spacing = {3}
+            alignItems = { "flex-end" }>
+        <Grid item md = {4}>
+          <TextField type = { "email" }
+                    displayName = { "email" } />
+        </Grid>
+        <Grid item md = {4}>
+          <TextField type = { "number" }
+                    displayName = { "number" }
+                    capitalization = { "lowercase" } />
+        </Grid>
+        <Grid item md = {4}>
+          <TextField type = { "text" }
+                    displayName = { "text" } 
+                    underline = { false } />
+        </Grid>
+      </Grid>    
+      <p>Multiline rows (also for Decimal field): </p>
+      <Grid container 
+            spacing = {3}
+            alignItems = { "flex-end" }>
+        <Grid item md = {4}>
+          <TextField type = { "text" }
+                    displayName = { "Multiple rows" } 
+                    multiline = { true }
+                    rows = { 4 }/>
+        </Grid>
+      </Grid>    
+    </section>
+    <section className = "section">
+      <h3>PhoneField component</h3>
+      <p>Input field with phone number mask.</p>
+      <Grid container 
+            spacing = {3}
+            alignItems = { "flex-end" }>
+        <Grid item md = {4}>
+          <PhoneField displayName = { "Phone field" } 
+                      mask = { ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/] }
+                      value = { '(123) 456-78-90' }/>
+        </Grid>
+      </Grid>    
+    </section>
+    <section className = "section">
+      <h3>PasswordField component</h3>
+      <p>Password field with toggle password visibility.</p>
+      <Grid container 
+            spacing = {3}
+            alignItems = { "flex-end" }>
+        <Grid item md = {4}>
+          <PasswordField displayName = { "Password field" }
+                         autocomplete = { "off" } 
+                         disableAutoComplete = { true }
+                         value = { "dontwatchthis!" } />
+        </Grid>
+      </Grid>    
+    </section>    
+    <section className = "section">
+      <h3>DecimalField component</h3>
+      <p>
+        Number field with special formatting. It has two number options: precision (length of number) and scale (length after point).<br/> 
+        Also you can set decimal separator, thousand separator and prefix/suffix string.
+      </p>
+      <Grid container 
+            spacing = {3}
+            alignItems = { "flex-end" }>
+        <Grid item md = {4}>
+          <DecimalField displayName = { "Prefix" }
+                        displayNamePosition = { "above" } 
+                        prefix = { "£" }
+                        precision = { 12 }
+                        scale = { 2 } />
+        </Grid>
+        <Grid item md = {4}>
+          <DecimalField displayName = { "Suffix" }
+                        displayNamePosition = { "above" } 
+                        suffix = { "$" }
+                        precision = { 12 }
+                        scale = { 2 } />
+        </Grid>
+      </Grid>
+    </section>
+    <section className = "section">
+      <h3>DateTimeField component</h3>
+      <p>
+        Simple datepicker field.<br/>
+        You can set format, locale, utcOffset, minDate, maxDate, serverDateFormat, serverDateTimeFormat.
+      </p>
+      <Grid container 
+            spacing = {3}
+            alignItems = { "flex-end" }>
+        <Grid item md = {4}>
+          <DateTimeField />
+        </Grid>      
+      </Grid>        
+    </section>    
+
+
      <SelectField data = { data } multiple = { true } allowClear = { true }/>
      <DateTimeField />
      <FileField uploader = {() => Promise.resolve() } allowSelfLoad = { true } />
-  </React.Fragment>
+  </div>
 }
 
 export default App

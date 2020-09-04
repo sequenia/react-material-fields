@@ -116,7 +116,8 @@ class PasswordField extends React.Component {
       displayName,
       variant,
       underline,
-      displayNamePosition
+      displayNamePosition,
+      disableAutoComplete
     } = this.props
 
     const { value, passwordShowing, disableShowPassword } = this.state
@@ -145,7 +146,7 @@ class PasswordField extends React.Component {
             error={hasError}
             InputProps={inputProps}
             type={passwordShowing ? 'text' : 'password'}
-            name={name}
+            name={disableAutoComplete ? guid : name}
             label={
               displayNamePosition === InputLabelDisplayModeInside
                 ? displayName
