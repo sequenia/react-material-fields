@@ -4,6 +4,9 @@
 
 [![NPM](https://img.shields.io/npm/v/react-material-fields.svg)](https://www.npmjs.com/package/react-material-fields) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+## Demo
+https://sequenia.github.io/react-material-fields/
+
 ## Install
 
 ```bash
@@ -24,6 +27,7 @@ class Example extends Component {
   render() {
     return <TextField className = { "class-name" } // your custom css (or jss) className (also for all fields) 
                       displayName = { "Text field" } // title of this field (also for all fields)
+                      onChange = { /* onChange event callback function for all fields */ }
                       variant = { "outlined" } // variants of styling: "outlined" by default prop, "filled" and "standard" (also fo Phone, Password, Decimal, Select and DateTime fields)
                       displayNamePosition = { "inside" } // position of title: "inside" by default prop and "above" (also fo Phone, Password, Decimal, Select and DateTime fields)
                       readOnly = { false } // boolean disabling, false by default prop (also fo Phone, Password, Decimal, Select and DateTime fields)
@@ -214,10 +218,33 @@ class Example extends Component {
                                                 const { data } = response;
                                                 return data;
                              });
-      } }/>
+                           }}
+      />
     </React.Fragment>  
   }
 }
+```
+
+### FileField and ImageField components
+
+File and image uploader
+
+```jsx
+import React, { Component } from 'react'
+import { FileField, ImageField } from '@sequenia/react-material-fields'
+
+render() {
+    return <React.Fragment>
+      <FileField uploader = {() => Promise.resolve() } // uploader is a function, that should return promise
+                 accept = { "*/*" } // file types, "*/*" by default
+                 deleteText = { "Delete" } // button text
+      /> 
+      <ImageField uploader = {() => Promise.resolve() } // uploader is a function, that should return promise
+                  deleteText = { "Delete"} // button text
+                  notUploadedText = { "Not uploaded" } // status text
+                  uploadingText = { "Uploading" } // status text
+      />
+    </React.Fragment>
 ```
 
 
