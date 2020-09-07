@@ -171,8 +171,6 @@ DecimalField.propTypes = {
   propsPrior: PropTypes.bool,
   capitalization: PropTypes.string,
   readOnly: PropTypes.bool,
-  multiline: PropTypes.bool,
-  rows: PropTypes.number,
   prefix: PropTypes.string,
   suffix: PropTypes.string,
   precision: PropTypes.number.isRequired,
@@ -187,8 +185,6 @@ DecimalField.defaultProps = {
   decimalSeparator: ',',
   thousandSeparator: '.',
   propsPrior: false,
-  multiline: false,
-  rows: 5,
   readOnly: false
 }
 
