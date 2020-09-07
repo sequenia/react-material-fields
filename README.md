@@ -192,29 +192,29 @@ class Example extends Component {
                    clearItem = { "all" } // text of "all" option
       />
       <RemoteSelectField optionDisplayName = { (option) => {
-                          const { first_name, last_name } = option;
-                          return `${first_name} ${last_name}`;
+                           const { first_name, last_name } = option;
+                           return `${first_name} ${last_name}`;
                          }}
                          value = { singleSelectValue }
                         //  value = { multipleSelectValue } for multiple choosing
                         //  multiple = { true } // boolean, for multiple choosing,
                          onChange = { (value) => {
-                          console.log(value)
+                           console.log(value)
                          }}
                          downloader = { (searchQuery, selectedValueIds) => {
-                         const params = {
-                          query: searchQuery,
-                          valueIds: selectedValueIds
-                         }
-                         const url = new URL("https://reqres.in/api/users");
-                         Object.keys(params).forEach(key => url.searchParams.append(key, encodeURIComponent(params[key])));
+                           const params = {
+                             query: searchQuery,
+                             valueIds: selectedValueIds
+                           }
+                           const url = new URL("https://reqres.in/api/users");
+                           Object.keys(params).forEach(key => url.searchParams.append(key, encodeURIComponent(params[key])));
 
-                         return fetch(url).then((response) => response.json())
-                                          .then((response) => {
-                                            const { data } = response;
-                                            return data;
-                         });
-      />
+                             return fetch(url).then((response) => response.json())
+                                              .then((response) => {
+                                                const { data } = response;
+                                                return data;
+                             });
+      } }/>
     </React.Fragment>  
   }
 }
