@@ -22,7 +22,8 @@ import { TextField } from '@sequenia/react-material-fields'
 
 class Example extends Component {
   render() {
-    return <TextField displayName = { "Text field" } // title of this field (also for all fields)
+    return <TextField className = { "class-name" } // your custom css (or jss) className (also for all fields) 
+                      displayName = { "Text field" } // title of this field (also for all fields)
                       variant = { "outlined" } // variants of styling: "outlined" by default prop, "filled" and "standard" (also fo Phone, Password, Decimal, Select and DateTime fields)
                       displayNamePosition = { "inside" } // position of title: "inside" by default prop and "above" (also fo Phone, Password, Decimal, Select and DateTime fields)
                       readOnly = { false } // boolean disabling, false by default prop (also fo Phone, Password, Decimal, Select and DateTime fields)
@@ -104,16 +105,121 @@ import { DateTimeField } from '@sequenia/react-material-fields'
 
 class Example extends Component {
   render() {
-    return <DateTimeField format = { "DD.MM.YYYY" } // date-month-year format, DD.MM.YYYY by default
+    return <DateTimeField displayName = { "Datetime field" }
+                          format = { "DD.MM.YYYY" } // date-month-year format, DD.MM.YYYY by default
                           locale = { "en" } // language, "en" by default
                           utcOffset = { "3" } // UTC Universal Time offset, "0" by default
                           minDate = { "1970-01-01" } // min date (year-month-day), "1900-01-01" by default
                           maxDate = { "2100-12-31" } // max date (year-month-day), "2100-12-31" by default
                           serverDateFormat = { "YYYY-MM-DD'" } // date format from backend, "YYYY-MM-DD" by default
                           serverDateTimeFormat = { "YYYY-MM-DDTHH:mm:ss" } // date and time format from backend, "YYYY-MM-DDTHH:mm:ss" by default
+           />               
   }
 }
 ```
+
+### Checkbox component
+
+Simple checkbox.
+
+```jsx
+import React, { Component } from 'react'
+import { Checkbox } from '@sequenia/react-material-fields'
+
+class Example extends Component {
+  render() {
+    return <Checkbox displayName = { "Checkbox" }
+                     placement = { "end" } // placement of title, "start" or "end", "end" by default
+                     checked = { false } // boolean prop
+           /> 
+  }
+}
+```
+
+### SelectField and RemoteSelectField components
+
+Custom select element.
+RemoteSelectField is a custom select with remote data and searching field.
+
+```jsx
+import React, { Component } from 'react'
+import { SelectField, RemoteSelectField } from '@sequenia/react-material-fields'
+
+class Example extends Component {
+
+  /* data examples */
+  const selectData = [
+    {
+      key: "One",
+      value: "1"
+    },
+    {
+      key: "Two",
+      value: "2"
+    }
+  ];
+
+  const singleSelectValue = {
+    "id":2,
+    "email":"janet.weaver@reqres.in",
+    "first_name":"Janet",
+    "last_name":"Weaver",
+    "avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/josephstein/128.jpg"
+  };
+  const multipleSelectValue = [
+    {
+      "id":2,
+      "email":"janet.weaver@reqres.in",
+      "first_name":"Janet",
+      "last_name":"Weaver",
+      "avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/josephstein/128.jpg"
+    },
+    {
+      "id":3,
+      "email":"emma.wong@reqres.in",
+      "first_name":"Emma",
+      "last_name":"Wong",
+      "avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/olegpogodaev/128.jpg"
+    }
+  ];
+
+  render() {
+    return <React.Fragment>
+      <SelectField data = { selectData }
+                   displayName = { "Select field" } 
+                   multiple = { true } // boolean, multiple choosing, false by default
+                   allowClear = { false } // boolean, showing "all" option
+                   clearItem = { "all" } // text of "all" option
+      />
+      <RemoteSelectField optionDisplayName = { (option) => {
+                          const { first_name, last_name } = option;
+                          return `${first_name} ${last_name}`;
+                         }}
+                         value = { singleSelectValue }
+                        //  value = { multipleSelectValue } for multiple choosing
+                        //  multiple = { true } // boolean, for multiple choosing,
+                         onChange = { (value) => {
+                          console.log(value)
+                         }}
+                         downloader = { (searchQuery, selectedValueIds) => {
+                         const params = {
+                          query: searchQuery,
+                          valueIds: selectedValueIds
+                         }
+                         const url = new URL("https://reqres.in/api/users");
+                         Object.keys(params).forEach(key => url.searchParams.append(key, encodeURIComponent(params[key])));
+
+                         return fetch(url).then((response) => response.json())
+                                          .then((response) => {
+                                            const { data } = response;
+                                            return data;
+                         });
+      />
+    </React.Fragment>  
+  }
+}
+```
+
 
 ## License
 
