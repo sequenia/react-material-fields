@@ -17,16 +17,17 @@ npm install --save @sequenia/react-material-fields
 
 List of common properties for all fields:
 
-| name                |type            | default       | description                                                |  
-| ------------------- | -------------- | ------------- | ---------------------------------------------------------- | 
-| className           | string         |               | your custom css (or jss) className                         |
-| disableAutoComplete | boolean        |               | disbaling/enabling standart autocomplete
-| displayName         | string         |               | title of this field                                        |
-| displayNamePosition | string         | "inside"      | position of title: "inside" by default prop and "above"    |
-| hasError            | boolean        |               | error highlight                                            |
-| onChange            | function       |               | onChange event callback function                           | 
-| readOnly            | boolean        |               | field disabling                                            |
-| variant             | string         | "outlined"    | variants of styling: "outlined", "filled" and "standard"   |
+| name                | type               | default       | description                                                |  
+| ------------------- | ------------------ | ------------- | ---------------------------------------------------------- | 
+| className           | string             |               | your custom css (or jss) className                         |
+| disableAutoComplete | boolean            | false         | disbaling/enabling standart autocomplete                   |
+| displayName         | string             |               | title of this field                                        |
+| displayNamePosition | string             | "inside"      | position of title: "inside" by default prop and "above"    |
+| hasError            | boolean            | false         | error highlight                                            |
+| onChange            | function           |               | onChange event callback function                           | 
+| readOnly            | boolean            | false         | field disabling                                            |
+| variant             | string             | "outlined"    | variants of styling: "outlined", "filled" and "standard"   |
+| value               |                    |               | field's value (string, number, array or object)            |
 
 
 
@@ -37,8 +38,8 @@ It's a simple text, email, or number input field.
 | name                | type           | default       | description                                                                                   |
 | --------------------|----------------|---------------|-----------------------------------------------------------------------------------------------|
 | type                | string         | "text"        | type of input: "text", "number" or "email"                                                    |
-| capitalization      | string         | "none"        | text capitalization for field: "uppercase", "lowercase", "capitalize", "none" by default prop |           
-| multiline           | boolean        |               | convert field to textarea                                                                     |
+| capitalization      | string         | "none"        | text capitalization for field: "uppercase", "lowercase", "capitalize", "none" by default prop |          
+| multiline           | boolean        | false         | convert field to textarea                                                                     |
 | rows                | number         | 5             | number of rows if multiline is true                                                           |
 
 ```jsx
@@ -49,15 +50,14 @@ class Example extends Component {
   render() {
     return <TextField displayName = { "Text field" }
                       disableAutoComplete = { true }
-                      type = { "email" }
-           />          
+                      type = { "email" } />          
   }
 }
 ```
 
 ### PhoneField component
 
-Password field with toggle password visibility
+Text field with number mask
 
 | name                | type           | is required   | description         |
 | --------------------|----------------|---------------|---------------------|
@@ -70,8 +70,7 @@ import { PhoneField } from '@sequenia/react-material-fields'
 class Example extends Component {
   render() {
     return <PhoneField displayName = { "Phone field" }
-                       mask = { ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/] }
-           />             
+                       mask = { ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/] } />             
   }
 }
 ```
@@ -80,16 +79,17 @@ class Example extends Component {
 
 Password field with toggle password visibility.
 
+| name                | type           | default       | description                    |
+| --------------------|----------------|---------------|--------------------------------|
+| disableShowPassword | boolean        | false         | disables visibility toggling   |
+
 ```jsx
 import React, { Component } from 'react'
 import { PasswordField } from '@sequenia/react-material-fields'
 
 class Example extends Component {
   render() {
-    return <PasswordField displayName = { "Password field" }
-                          disableShowPassword = { false } // boolean, disable  visibility toggling, false by default
-                          disableAutoComplete = { false } // disbaling autocomplete, false by default 
-           />               
+    return <PasswordField displayName = { "Password field" }/>               
   }
 }
 ```
@@ -99,6 +99,15 @@ class Example extends Component {
 Number field with special formatting. It has two number options: precision (length of number) and scale (length after point).
 Also you can set decimal separator, thousand separator and prefix/suffix string.
 
+| name                | type           | default       | description                    |
+| --------------------|----------------|---------------|--------------------------------|
+| prefix              | string         |               | string prefix                  |
+| suffix              | string         |               | string suffix                  |
+| precision           | number         | 10            | length of number before point  |
+| scale               | number         | 2             | length after point             |
+| decimalSeparator    | string         | ","           | separator symbol               |
+| thousandSeparator   | string         | "."           | separator symbol               |
+
 ```jsx
 import React, { Component } from 'react'
 import { DecimalField } from '@sequenia/react-material-fields'
@@ -106,13 +115,8 @@ import { DecimalField } from '@sequenia/react-material-fields'
 class Example extends Component {
   render() {
     return <DecimalField displayName = { "Decimal field" }
-                         prefix = { "£" } // string prefix
-                         suffix = { "$" } // string suffix
-                         precision = { 12 } // length of number (is required props) 
-                         scale = { 2 } // length after point, "2" by default
-                         decimalSeparator = { "," } // "," by default
-                         thousandSeparator = { "." } // "." by default
-  }        />
+                         suffix = { "$" } />
+  }        
 }
 ```
 
@@ -121,21 +125,25 @@ class Example extends Component {
 Simple datepicker field.
 You can set format, locale, utcOffset, minDate, maxDate, serverDateFormat, serverDateTimeFormat.
 
+| name                | type           | default                | description                             |
+| --------------------|----------------|------------------------|--------------------------------         |
+| format              | string         | "DD.MM.YYYY"           | date-month-year format                  |
+| locale              | string         | "en"                   | language                                |
+| utcOffset           | number         | 0                      | UTC Universal Time offset, 0 by default |
+| minDate             | text           | "1900-01-01"           | min date (year-month-day)               |
+| maxDate             | text           | "2100-12-31"           | max date (year-month-day)               |
+| maxDate             | text           | "2100-12-31"           | max date (year-month-day)               |
+| serverDateFormat    | text           | "YYYY-MM-DD"           | date format from backend                |
+| serverDateTimeFormat| text           | "YYYY-MM-DDTHH:mm:ss"  | date and time format from backend       |
+
+
 ```jsx
 import React, { Component } from 'react'
 import { DateTimeField } from '@sequenia/react-material-fields'
 
 class Example extends Component {
   render() {
-    return <DateTimeField displayName = { "Datetime field" }
-                          format = { "DD.MM.YYYY" } // date-month-year format, DD.MM.YYYY by default
-                          locale = { "en" } // language, "en" by default
-                          utcOffset = { "3" } // UTC Universal Time offset, "0" by default
-                          minDate = { "1970-01-01" } // min date (year-month-day), "1900-01-01" by default
-                          maxDate = { "2100-12-31" } // max date (year-month-day), "2100-12-31" by default
-                          serverDateFormat = { "YYYY-MM-DD'" } // date format from backend, "YYYY-MM-DD" by default
-                          serverDateTimeFormat = { "YYYY-MM-DDTHH:mm:ss" } // date and time format from backend, "YYYY-MM-DDTHH:mm:ss" by default
-           />               
+    return <DateTimeField displayName = { "Datetime field" }/>               
   }
 }
 ```
@@ -144,16 +152,18 @@ class Example extends Component {
 
 Simple checkbox.
 
+| name                | type           | default                | description                          |
+| --------------------|----------------|------------------------|--------------------------------------|
+| placement           | string         | "end"                  | placement of title, "start" or "end" |
+| checked             | boolean        | false                  | checked status                       |
+
 ```jsx
 import React, { Component } from 'react'
 import { Checkbox } from '@sequenia/react-material-fields'
 
 class Example extends Component {
   render() {
-    return <Checkbox displayName = { "Checkbox" }
-                     placement = { "end" } // placement of title, "start" or "end", "end" by default
-                     checked = { false } // boolean prop
-           /> 
+    return <Checkbox displayName = { "Checkbox" } /> 
   }
 }
 ```

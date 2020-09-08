@@ -173,7 +173,7 @@ DecimalField.propTypes = {
   readOnly: PropTypes.bool,
   prefix: PropTypes.string,
   suffix: PropTypes.string,
-  precision: PropTypes.number.isRequired,
+  precision: PropTypes.number,
   scale: PropTypes.number
 }
 
@@ -184,6 +184,7 @@ DecimalField.defaultProps = {
   scale: 2,
   decimalSeparator: ',',
   thousandSeparator: '.',
+  precision: 10,
   propsPrior: false,
   readOnly: false
 }
