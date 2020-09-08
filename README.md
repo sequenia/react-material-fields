@@ -15,7 +15,21 @@ npm install --save @sequenia/react-material-fields
 
 ## Usage
 
-### TextField component
+List of common properties for all fields:
+
+| name                |type            | default       | description                                                |  
+| ------------------- | -------------- | ------------- | ---------------------------------------------------------- | 
+| className           | string         |               | your custom css (or jss) className                         |
+| displayName         | string         |               | title of this field                                        |
+| displayNamePosition | string         | "inside"      | position of title: "inside" by default prop and "above"    |
+| hasError            | boolean        |               | error highlight                                            |
+| onChange            | function       |               | onChange event callback function                           | 
+| readOnly            | boolean        |               | field disabling                                            |
+| variant             | string         | "outlined"    | variants of styling: "outlined", "filled" and "standard"   |
+
+
+
+### TextField
 
 It's a simple text, email, or number input field.
 
