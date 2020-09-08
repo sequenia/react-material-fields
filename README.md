@@ -55,7 +55,7 @@ class Example extends Component {
 }
 ```
 
-### PhoneField component
+### PhoneField
 
 Text field with number mask
 
@@ -75,7 +75,7 @@ class Example extends Component {
 }
 ```
 
-### PasswordField component
+### PasswordField
 
 Password field with toggle password visibility.
 
@@ -94,7 +94,7 @@ class Example extends Component {
 }
 ```
 
-### DecimalField component
+### DecimalField
 
 Number field with special formatting. It has two number options: precision (length of number) and scale (length after point).
 Also you can set decimal separator, thousand separator and prefix/suffix string.
@@ -120,7 +120,7 @@ class Example extends Component {
 }
 ```
 
-### DateTimeField component
+### DateTimeField
 
 Simple datepicker field.
 You can set format, locale, utcOffset, minDate, maxDate, serverDateFormat, serverDateTimeFormat.
@@ -148,9 +148,10 @@ class Example extends Component {
 }
 ```
 
-### Checkbox component
+### Checkbox
 
 Simple checkbox.
+NOTE: checkbox element recieve only these props: displayName, checked, placement
 
 | name                | type           | default                | description                          |
 | --------------------|----------------|------------------------|--------------------------------------|
@@ -168,10 +169,17 @@ class Example extends Component {
 }
 ```
 
-### SelectField and RemoteSelectField components
+### SelectField and RemoteSelectField
 
 Custom select element.
 RemoteSelectField is a custom select with remote data and searching field.
+
+| name                | type           | default                | is required      | description                                                                                                                               |
+| --------------------|----------------|------------------------|------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| data                | array          |                        | yes              | Array of objects. Every object should have "key" and "value". "Key" is a visible string of dropdown option. "Value" is a value of option. | 
+| multiple            | boolean        | false                  |                  | multiple choosing    |
+| allowClear          | boolean        | false                  |                  | showing "all" option |
+| clearItem           | string         | "all"                  |                  | text of "all" option |
 
 ```jsx
 import React, { Component } from 'react'
@@ -219,9 +227,8 @@ class Example extends Component {
     return <React.Fragment>
       <SelectField data = { selectData }
                    displayName = { "Select field" } 
-                   multiple = { true } // boolean, multiple choosing, false by default
-                   allowClear = { false } // boolean, showing "all" option
-                   clearItem = { "all" } // text of "all" option
+                   multiple = { true }
+                   allowClear = { true }
       />
       <RemoteSelectField optionDisplayName = { (option) => {
                            const { first_name, last_name } = option;
@@ -253,9 +260,17 @@ class Example extends Component {
 }
 ```
 
-### FileField and ImageField components
+### FileField and ImageField
 
 File and image uploader
+
+| name                | type           | default                | is required      | description                                                                                                                               |
+| --------------------|----------------|------------------------|------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| uploader            | function       |                        | yes              | uploader is a function, that should return promise                                                                                        | 
+| accept              | text           | "\*/\*"                |                  | file types  |
+| deleteText          | string         | "Delete"               |                  | button text |
+| notUploadedText     | string         | "Not uploaded"         |                  | button text |
+| uploadingText       | string         | "Uploading"            |                  | button text |
 
 ```jsx
 import React, { Component } from 'react'
@@ -263,15 +278,8 @@ import { FileField, ImageField } from '@sequenia/react-material-fields'
 
 render() {
     return <React.Fragment>
-      <FileField uploader = {() => Promise.resolve() } // uploader is a function, that should return promise
-                 accept = { "*/*" } // file types, "*/*" by default
-                 deleteText = { "Delete" } // button text
-      /> 
-      <ImageField uploader = {() => Promise.resolve() } // uploader is a function, that should return promise
-                  deleteText = { "Delete"} // button text
-                  notUploadedText = { "Not uploaded" } // status text
-                  uploadingText = { "Uploading" } // status text
-      />
+      <FileField uploader = {() => Promise.resolve() } /> 
+      <ImageField uploader = {() => Promise.resolve() } />
     </React.Fragment>
 ```
 
