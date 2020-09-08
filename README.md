@@ -20,6 +20,7 @@ List of common properties for all fields:
 | name                |type            | default       | description                                                |  
 | ------------------- | -------------- | ------------- | ---------------------------------------------------------- | 
 | className           | string         |               | your custom css (or jss) className                         |
+| disableAutoComplete | boolean        |               | disbaling/enabling standart autocomplete
 | displayName         | string         |               | title of this field                                        |
 | displayNamePosition | string         | "inside"      | position of title: "inside" by default prop and "above"    |
 | hasError            | boolean        |               | error highlight                                            |
@@ -33,23 +34,22 @@ List of common properties for all fields:
 
 It's a simple text, email, or number input field.
 
+| name                | type           | default       | description                                                                                   |
+| --------------------|----------------|---------------|-----------------------------------------------------------------------------------------------|
+| type                | string         | "text"        | type of input: "text", "number" or "email"                                                    |
+| capitalization      | string         | "none"        | text capitalization for field: "uppercase", "lowercase", "capitalize", "none" by default prop |           
+| multiline           | boolean        |               | convert field to textarea                                                                     |
+| rows                | number         | 5             | number of rows if multiline is true                                                           |
+
 ```jsx
 import React, { Component } from 'react'
 import { TextField } from '@sequenia/react-material-fields'
 
 class Example extends Component {
   render() {
-    return <TextField className = { "class-name" } // your custom css (or jss) className (also for all fields) 
-                      displayName = { "Text field" } // title of this field (also for all fields)
-                      onChange = { /* onChange event callback function for all fields */ }
-                      variant = { "outlined" } // variants of styling: "outlined" by default prop, "filled" and "standard" (also fo Phone, Password, Decimal, Select and DateTime fields)
-                      displayNamePosition = { "inside" } // position of title: "inside" by default prop and "above" (also fo Phone, Password, Decimal, Select and DateTime fields)
-                      readOnly = { false } // boolean disabling, false by default prop (also fo Phone, Password, Decimal, Select and DateTime fields)
-                      hasError = { false } // boolean error highlight, false by default prop (also fo Phone, Password, Decimal, Select and DateTime fields)
-                      type = { "text" } // type "text" by default prop, "number" of "email"
-                      capitalization = { "none" } // text capitalization for field: "uppercase", "lowercase", "capitalize", "none" by default prop
-                      multiline = { false } // boolean, convert field to textarea, false by default prop
-                      rows = { 5 } // number of rows if multiline is true, 5 by default
+    return <TextField displayName = { "Text field" }
+                      disableAutoComplete = { true }
+                      type = { "email" }
            />          
   }
 }
@@ -59,6 +59,10 @@ class Example extends Component {
 
 Password field with toggle password visibility
 
+| name                | type           | is required   | description         |
+| --------------------|----------------|---------------|---------------------|
+| mask                | array          | yes           | number mask array   |
+
 ```jsx
 import React, { Component } from 'react'
 import { PhoneField } from '@sequenia/react-material-fields'
@@ -66,7 +70,7 @@ import { PhoneField } from '@sequenia/react-material-fields'
 class Example extends Component {
   render() {
     return <PhoneField displayName = { "Phone field" }
-                       mask = { ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/] } // number mask (is required props)      
+                       mask = { ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/] }
            />             
   }
 }
