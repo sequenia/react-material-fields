@@ -6,7 +6,7 @@ import {
   DateTimeField,
   ImageField, FileField,
   SelectField, RemoteSelectField,
-  TextField, DecimalField, PhoneField, PasswordField 
+  TextField, DecimalField, PhoneField, PasswordField, WYSIWYGField 
 } from 'react-material-fields'
 
 const App = () => {
@@ -367,6 +367,19 @@ const App = () => {
             alignItems = { "flex-end" }>
         <Grid item md = {4}>
           <FileField uploader = {() => Promise.resolve() } />
+        </Grid>
+      </Grid>  
+    </section>      
+    <section className = "section">
+      <h3>WYSIWYGField component</h3>
+      <p>
+       WYSIWYGField editor.
+      </p>
+      <Grid container 
+            spacing = {3}
+            alignItems = { "flex-end" }>
+        <Grid item md = {4}>
+          <WYSIWYGField />
         </Grid>
       </Grid>  
     </section>      

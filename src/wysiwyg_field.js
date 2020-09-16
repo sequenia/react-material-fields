@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { compose } from 'recompose'
 import { withStyles } from '@material-ui/styles'
-import Color from 'color'
+// import Color from 'color'
 
 import { FormLabel } from '@material-ui/core'
 
@@ -41,36 +41,33 @@ import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
 import List from '@ckeditor/ckeditor5-list/src/list'
 import TodoList from '@ckeditor/ckeditor5-list/src/todolist'
 
-import Link from '@ckeditor/ckeditor5-link/src/link'
+// import Link from '@ckeditor/ckeditor5-link/src/link'
 
 import Indent from '@ckeditor/ckeditor5-indent/src/indent'
 import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock'
 
-import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed'
+// import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed'
 
-import EasyImage from '@ckeditor/ckeditor5-easy-image/src/easyimage'
+// import EasyImage from '@ckeditor/ckeditor5-easy-image/src/easyimage'
 
-import Image from '@ckeditor/ckeditor5-image/src/image'
-import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar'
-import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption'
-import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle'
-import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize'
-import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload'
+// import Image from '@ckeditor/ckeditor5-image/src/image'
+// import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar'
+// import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption'
+// import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle'
+// import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize'
+// import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload'
 
-import FileRepository from '@ckeditor/ckeditor5-upload/src/filerepository'
+// import FileRepository from '@ckeditor/ckeditor5-upload/src/filerepository'
 
 import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote'
 
 import withGuid from './hocs/with_guid.js'
 import withHelperText from './hocs/with_helper_text.js'
 
-import UploadEditorImageUseCase from '../../use_cases/assets/editor_images/upload_editor_image_use_case.js'
-
 import {
   InputLabelDisplayModeInside,
   InputLabelDisplayModeAbove
 } from './constants.js'
-
 
 const styles = (theme) => ({
   root: {},
@@ -119,52 +116,10 @@ const styles = (theme) => ({
   },
   error: {
     '& .ck-content': {
-      backgroundColor: `${Color('#ff0000').alpha(0.1).string()} !important`
+      backgroundColor: 'rgba(255, 0, 0, .1)!important'
     }
   }
 })
-
-class MyUploadAdapter {
-  constructor(loader) {
-    this.loader = loader
-  }
-
-  upload() {
-    return this.loader.file.then(
-      (file) =>
-        new Promise((resolve, reject) => {
-          UploadEditorImageUseCase.execute(file)
-            .then((result) => {
-              const {
-                data: {
-                  editorImage: {
-                    urls: { origin, medium, large, big }
-                  }
-                }
-              } = result
-              resolve({
-                default: big
-              })
-            })
-            .catch((error) => {
-              reject(error.message)
-            })
-        })
-    )
-  }
-
-  abort() {
-    if (UploadEditorImageUseCase.cancel) {
-      UploadEditorImageUseCase.cancel()
-    }
-  }
-}
-
-function MyCustomUploadAdapterPlugin(editor) {
-  editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-    return new MyUploadAdapter(loader)
-  }
-}
 
 /**
  * Callback for inputs
@@ -234,7 +189,7 @@ class WYSIWYGField extends React.Component {
 
   config() {
     // https://ckeditor5.github.io/docs/nightly/ckeditor5/latest/features/table.html
-    const { toolbarItems } = this.props
+    const { extraPlugins, toolbarItems, viewportTopOffset } = this.props
 
     return {
       plugins: [
@@ -258,20 +213,20 @@ class WYSIWYGField extends React.Component {
         IndentBlock,
         List,
         TodoList,
-        Link,
-        MediaEmbed,
-        FileRepository,
-        BlockQuote,
-        EasyImage,
-        Image,
-        ImageToolbar,
-        ImageCaption,
-        ImageStyle,
-        ImageResize,
-        ImageUpload
+        // Link,
+        // MediaEmbed,
+        // FileRepository,
+        BlockQuote
+        // EasyImage,
+        // Image,
+        // ImageToolbar,
+        // ImageCaption,
+        // ImageStyle,
+        // ImageResize,
+        // ImageUpload
       ],
       toolbar: {
-        viewportTopOffset: this.props.viewportTopOffset,
+        viewportTopOffset: viewportTopOffset,
         items: toolbarItems
       },
       image: {
@@ -304,7 +259,7 @@ class WYSIWYGField extends React.Component {
       },
       // fontColor: colorSettings,
       // fontBackgroundColor: colorSettings,
-      extraPlugins: [MyCustomUploadAdapterPlugin]
+      extraPlugins: extraPlugins
     }
   }
 
@@ -347,11 +302,13 @@ WYSIWYGField.propTypes = {
     InputLabelDisplayModeAbove,
     InputLabelDisplayModeInside
   ]),
+  extraPlugins: PropTypes.array,
   viewportTopOffset: PropTypes.number
 }
 
 WYSIWYGField.defaultProps = {
   displayNamePosition: InputLabelDisplayModeInside,
+  extraPlugins: [],
   toolbarItems: [
     'heading',
     '|',
