@@ -28,15 +28,7 @@
   },
   "peerDependencies": {
     "@material-ui/core": "^4.9.0",
-    "@material-ui/icons": "^4.5.1",
-    "@material-ui/pickers": "^3.2.10",
-    "@material-ui/styles": "^4.9.0",
-    "clsx": "^1.0.2",
-    "moment": "^2.27.0",
-    "prop-types": "^15.7.2",
-    "react": "^16.0.0",
-    "recompose": "^0.30.0",
-    "uuid": "^3.4.0"
+    "react": "^16.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
@@ -60,8 +52,16 @@
   },
   "dependencies": {
     "@date-io/moment": "1.x",
+    "@material-ui/icons": "^4.5.1",
+    "@material-ui/pickers": "^3.2.10",
+    "@material-ui/styles": "^4.9.0",
+    "clsx": "^1.0.2",
+    "moment": "^2.27.0",
+    "prop-types": "^15.7.2",
+    "recompose": "^0.30.0",
     "react-number-format": "^4.4.1",
-    "react-text-mask": "^5.4.3"
+    "react-text-mask": "^5.4.3",
+    "uuid": "^3.4.0"
   },
   "files": [
     "dist"

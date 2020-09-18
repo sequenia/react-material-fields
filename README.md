@@ -7,6 +7,10 @@
 ## Demo
 https://sequenia.github.io/react-material-fields/
 
+## Requirements
+
+React v16.0.0 and above, @material-ui/core v4.9.0 and above
+
 ## Install
 
 ```bash
