@@ -51,7 +51,7 @@ class UploadButton extends React.Component {
   }
 
   render() {
-    const { accept, guid, classes, text, multiple } = this.props
+    const { accept, guid, classes, className, text, multiple } = this.props
     const { hasError } = this.state
     return (
       <div>
@@ -68,7 +68,8 @@ class UploadButton extends React.Component {
           <Button
             className={clsx({
               [classes.button]: true,
-              [classes.error]: hasError
+              [classes.error]: hasError,
+              [className]: className
             })}
             variant={ButtonVariantOutlined}
             component='span'

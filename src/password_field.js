@@ -109,7 +109,14 @@ class PasswordField extends React.Component {
   }
 
   render() {
-    const { classes, className, guid, hasError, readOnly } = this.props
+    const {
+      classes,
+      className,
+      iconClassName,
+      guid,
+      hasError,
+      readOnly
+    } = this.props
 
     const {
       name,
@@ -157,7 +164,10 @@ class PasswordField extends React.Component {
             onChange={this.onChange}
             disabled={readOnly}
           />
-          <IconButton className={classes.eye} onClick={this.onEyeClicked}>
+          <IconButton
+            className={clsx(classes.eye, iconClassName)}
+            onClick={this.onEyeClicked}
+          >
             {!disableShowPassword && passwordShowing && <IcOpenedEye />}
             {!disableShowPassword && !passwordShowing && <IcClosedEye />}
           </IconButton>

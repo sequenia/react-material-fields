@@ -86,6 +86,7 @@ Password field with toggle password visibility.
 | name                | type           | default       | description                    |
 | --------------------|----------------|---------------|--------------------------------|
 | disableShowPassword | boolean        | false         | disables visibility toggling   |
+| iconClassName       | string         |               | className props for iconButton |
 
 ```jsx
 import React, { Component } from 'react'
@@ -139,6 +140,7 @@ You can set format, locale, utcOffset, minDate, maxDate, serverDateFormat, serve
 | maxDate             | text           | "2100-12-31"           | max date (year-month-day)               |
 | serverDateFormat    | text           | "YYYY-MM-DD"           | date format from backend                |
 | serverDateTimeFormat| text           | "YYYY-MM-DDTHH:mm:ss"  | date and time format from backend       |
+| iconClassName       | string         |                        | className props for iconButton          |
 
 
 ```jsx
@@ -275,6 +277,7 @@ File and image uploader
 | deleteText          | string         | "Delete"               |                  | button text |
 | notUploadedText     | string         | "Not uploaded"         |                  | button text |
 | uploadingText       | string         | "Uploading"            |                  | button text |
+| buttonClassName     | string         |                        |                  | className property |
 
 ```jsx
 import React, { Component } from 'react'

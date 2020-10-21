@@ -159,6 +159,7 @@ class FileField extends React.Component {
 
   render() {
     const {
+      buttonClassName,
       classes,
       displayName,
       allowDelete,
@@ -173,6 +174,7 @@ class FileField extends React.Component {
     if (allowSelfLoad && !uploading && !local && !value) {
       buttons.push(
         <UploadButton
+          className={buttonClassName}
           key='upload'
           multiple={false}
           onChange={this.onFileChange}

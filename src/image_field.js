@@ -166,6 +166,7 @@ class ImageField extends React.Component {
 
   render() {
     const {
+      buttonClassName,
       classes,
       displayName,
       allowDelete,
@@ -178,6 +179,7 @@ class ImageField extends React.Component {
     if (!uploading && !local && !value && allowSelfLoad) {
       buttons.push(
         <UploadButton
+          className={buttonClassName}
           key='upload'
           onChange={this.onFileChange}
           multiple={false}

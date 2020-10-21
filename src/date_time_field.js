@@ -100,7 +100,7 @@ class DateTimePicker extends React.Component {
   }
 
   render() {
-    const { classes, className, guid, readOnly } = this.props
+    const { classes, className, iconClassName, guid, readOnly } = this.props
 
     const {
       name,
@@ -145,6 +145,9 @@ class DateTimePicker extends React.Component {
               disabled={readOnly}
               minDate={minDate}
               maxDate={maxDate}
+              KeyboardButtonProps={{
+                className: iconClassName
+              }}
               // invalidDateMessage={I18n.t(
               //   'component.date_time_field.invalid_date'
               // )}
