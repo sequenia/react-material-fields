@@ -3,9 +3,7 @@ import uuidv4 from 'uuid/v4'
 
 const WithGuid = (Component) => {
   class WithGuid extends React.Component {
-    constructor(props) {
-      super(props)
-
+    componentDidMount() {
       this.guid = uuidv4()
     }
 
