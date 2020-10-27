@@ -32,6 +32,7 @@ List of common properties for all fields:
 | readOnly            | boolean            | false         | field disabling                                            |
 | variant             | string             | "outlined"    | variants of styling: "outlined", "filled" and "standard"   |
 | value               |                    |               | field's value (string, number, array or object)            |
+| aboveLabelClassName | string             |               | if displayNamePosition = "above" , this is label className prop |
 
 
 
