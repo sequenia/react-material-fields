@@ -100,7 +100,14 @@ class DateTimePicker extends React.Component {
   }
 
   render() {
-    const { classes, className, iconClassName, guid, readOnly } = this.props
+    const {
+      classes,
+      className,
+      iconClassName,
+      aboveLabelClassName,
+      guid,
+      readOnly
+    } = this.props
 
     const {
       name,
@@ -121,7 +128,11 @@ class DateTimePicker extends React.Component {
     return (
       <React.Fragment>
         {displayNamePosition === InputLabelDisplayModeAbove && (
-          <FormLabel htmlFor={guid} error={hasError}>
+          <FormLabel
+            htmlFor={guid}
+            error={hasError}
+            className={aboveLabelClassName}
+          >
             {`${displayName}:`}
           </FormLabel>
         )}

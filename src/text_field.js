@@ -108,7 +108,14 @@ class TextField extends React.Component {
   }
 
   render() {
-    const { classes, className, guid, hasError, placeholder } = this.props
+    const {
+      classes,
+      className,
+      aboveLabelClassName,
+      guid,
+      hasError,
+      placeholder
+    } = this.props
 
     const {
       name,
@@ -128,7 +135,11 @@ class TextField extends React.Component {
         {displayNamePosition === InputLabelDisplayModeAbove &&
           displayName &&
           displayName !== '' && (
-            <FormLabel htmlFor={guid} error={hasError}>
+            <FormLabel
+              htmlFor={guid}
+              error={hasError}
+              className={aboveLabelClassName}
+            >
               {`${displayName}:`}
             </FormLabel>
           )}

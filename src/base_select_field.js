@@ -104,6 +104,7 @@ class BaseSelectField extends React.Component {
     const {
       classes,
       className,
+      aboveLabelClassName,
       guid,
       hasError,
       multiple,
@@ -116,7 +117,11 @@ class BaseSelectField extends React.Component {
     return (
       <React.Fragment>
         {displayName && displayNamePosition === InputLabelDisplayModeAbove && (
-          <FormLabel htmlFor={guid} error={hasError}>
+          <FormLabel
+            htmlFor={guid}
+            error={hasError}
+            className={aboveLabelClassName}
+          >
             {`${displayName}:`}
           </FormLabel>
         )}

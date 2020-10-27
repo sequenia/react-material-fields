@@ -113,6 +113,7 @@ class PasswordField extends React.Component {
       classes,
       className,
       iconClassName,
+      aboveLabelClassName,
       guid,
       hasError,
       readOnly
@@ -137,7 +138,11 @@ class PasswordField extends React.Component {
     return (
       <React.Fragment>
         {displayNamePosition === InputLabelDisplayModeAbove && (
-          <FormLabel htmlFor={guid} error={hasError}>
+          <FormLabel
+            htmlFor={guid}
+            error={hasError}
+            className={aboveLabelClassName}
+          >
             {`${displayName}:`}
           </FormLabel>
         )}

@@ -95,7 +95,14 @@ class PhoneField extends React.Component {
   }
 
   render() {
-    const { classes, className, guid, hasError, readOnly } = this.props
+    const {
+      classes,
+      className,
+      aboveLabelClassName,
+      guid,
+      hasError,
+      readOnly
+    } = this.props
 
     const {
       name,
@@ -124,7 +131,11 @@ class PhoneField extends React.Component {
     return (
       <React.Fragment>
         {displayNamePosition === InputLabelDisplayModeAbove && (
-          <FormLabel htmlFor={guid} error={hasError}>
+          <FormLabel
+            htmlFor={guid}
+            error={hasError}
+            className={aboveLabelClassName}
+          >
             {`${displayName}:`}
           </FormLabel>
         )}
